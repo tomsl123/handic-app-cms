@@ -1,0 +1,28 @@
+{
+  "collectionName": "events",
+  "info": { "singularName": "event", "pluralName": "events", "displayName": "Event" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "description": { "type": "text" },
+    "name": { "type": "string", "required": true },
+    "start_time": { "type": "datetime" },
+    "end_time": { "type": "datetime" },
+    "event_type": { "type": "string" },
+    "media": { "type": "media", "multiple": true },
+    "max_capacity": { "type": "integer" },
+    "website": { "type": "string" },
+    "tags": { "type": "string" },
+    "languages": { "type": "string" },
+    "seat_maps": { "type": "string" },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location"
+    },
+    "organizer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::organizer.organizer"
+    }
+  }
+}

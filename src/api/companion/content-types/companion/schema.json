@@ -1,0 +1,14 @@
+{
+  "collectionName": "companions",
+  "info": { "singularName": "companion", "pluralName": "companions", "displayName": "Companion" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "first_name": { "type": "string" },
+    "last_name": { "type": "string" },
+    "accompanying": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

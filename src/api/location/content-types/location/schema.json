@@ -1,0 +1,22 @@
+{
+  "collectionName": "locations",
+  "info": { "singularName": "location", "pluralName": "locations", "displayName": "Location" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "description": { "type": "text" },
+    "name": { "type": "string", "required": true },
+    "address": { "type": "string" },
+    "media": { "type": "media", "multiple": true },
+    "website": { "type": "string" },
+    "opening_hours": { "type": "string" },
+    "contact_details": { "type": "string" },
+    "location_overview": { "type": "string" },
+    "capacity": { "type": "integer" },
+    "size": { "type": "string" },
+    "accessibility_feature": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::accessibility-feature.accessibility-feature"
+    }
+  }
+}

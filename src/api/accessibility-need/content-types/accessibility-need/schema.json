@@ -1,0 +1,10 @@
+{
+  "collectionName": "accessibility_needs",
+  "info": { "singularName": "accessibility-need", "pluralName": "accessibility-needs", "displayName": "Accessibility Need" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "icon": { "type": "media" }
+  }
+}

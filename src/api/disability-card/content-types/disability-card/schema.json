@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "disability_cards",
+  "info": {
+    "singularName": "disability-card",
+    "pluralName": "disability-cards",
+    "displayName": "Disability Card",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "number": {
+      "type": "string",
+      "required": true
+    },
+    "proof": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "reviewStatus": {
+      "type": "enumeration",
+      "enum": [
+        "unreviewed",
+        "rejected",
+        "approved"
+      ],
+      "default": "unreviewed",
+      "required": true
+    },
+    "expiry": {
+      "type": "date",
+      "required": true
+    },
+    "issueDate": {
+      "type": "date",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "disability_card"
+    }
+  }
+}

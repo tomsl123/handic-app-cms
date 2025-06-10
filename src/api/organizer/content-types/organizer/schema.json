@@ -1,0 +1,15 @@
+{
+  "collectionName": "organizers",
+  "info": { "singularName": "organizer", "pluralName": "organizers", "displayName": "Organizer" },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "type": { "type": "string" },
+    "website": { "type": "string" },
+    "address": { "type": "string" },
+    "contact_email": { "type": "email" },
+    "contact_phone": { "type": "string" },
+    "media": { "type": "media", "multiple": true }
+  }
+}
