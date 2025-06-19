@@ -1,15 +1,51 @@
 {
+  "kind": "collectionType",
   "collectionName": "organizers",
-  "info": { "singularName": "organizer", "pluralName": "organizers", "displayName": "Organizer" },
-  "options": { "draftAndPublish": true },
+  "info": {
+    "singularName": "organizer",
+    "pluralName": "organizers",
+    "displayName": "Organizer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "name": { "type": "string", "required": true },
-    "description": { "type": "text" },
-    "type": { "type": "string" },
-    "website": { "type": "string" },
-    "address": { "type": "string" },
-    "contact_email": { "type": "email" },
-    "contact_phone": { "type": "string" },
-    "media": { "type": "media", "multiple": true }
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "minLength": 10
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "website": {
+      "type": "string",
+      "regex": "^(https?:\\/\\/)?([\\w\\-]+\\.)+[a-z]{2,6}(:\\d+)?(\\/.*)?$"
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "contact_email": {
+      "type": "email",
+      "required": true
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "media": {
+      "type": "media",
+      "multiple": true,
+      "required": false
+    }
   }
 }

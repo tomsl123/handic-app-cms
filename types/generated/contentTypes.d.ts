@@ -377,6 +377,7 @@ export interface ApiAccessibilityFeatureAccessibilityFeature
   extends Struct.CollectionTypeSchema {
   collectionName: 'accessibility_features';
   info: {
+    description: '';
     displayName: 'Accessibility Feature';
     pluralName: 'accessibility-features';
     singularName: 'accessibility-feature';
@@ -399,7 +400,13 @@ export interface ApiAccessibilityFeatureAccessibilityFeature
       'api::accessibility-feature.accessibility-feature'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -411,6 +418,7 @@ export interface ApiAccessibilityNeedAccessibilityNeed
   extends Struct.CollectionTypeSchema {
   collectionName: 'accessibility_needs';
   info: {
+    description: '';
     displayName: 'Accessibility Need';
     pluralName: 'accessibility-needs';
     singularName: 'accessibility-need';
@@ -430,7 +438,13 @@ export interface ApiAccessibilityNeedAccessibilityNeed
       'api::accessibility-need.accessibility-need'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -441,6 +455,7 @@ export interface ApiAccessibilityNeedAccessibilityNeed
 export interface ApiCompanionCompanion extends Struct.CollectionTypeSchema {
   collectionName: 'companions';
   info: {
+    description: '';
     displayName: 'Companion';
     pluralName: 'companions';
     singularName: 'companion';
@@ -456,8 +471,18 @@ export interface ApiCompanionCompanion extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    first_name: Schema.Attribute.String;
-    last_name: Schema.Attribute.String;
+    first_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
+    last_name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -495,9 +520,15 @@ export interface ApiDisabilityCardDisabilityCard
       'api::disability-card.disability-card'
     > &
       Schema.Attribute.Private;
-    number: Schema.Attribute.String & Schema.Attribute.Required;
+    number: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
     proof: Schema.Attribute.Media<'images' | 'files', true> &
-      Schema.Attribute.Required;
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     reviewStatus: Schema.Attribute.Enumeration<
       ['unreviewed', 'rejected', 'approved']
@@ -517,6 +548,7 @@ export interface ApiDisabilityCardDisabilityCard
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
+    description: '';
     displayName: 'Event';
     pluralName: 'events';
     singularName: 'event';
@@ -528,24 +560,40 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    end_time: Schema.Attribute.DateTime;
-    event_type: Schema.Attribute.String;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 10;
+      }>;
+    end_time: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    event_type: Schema.Attribute.String & Schema.Attribute.Required;
     languages: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
     location: Schema.Attribute.Relation<'manyToOne', 'api::location.location'>;
-    max_capacity: Schema.Attribute.Integer;
-    media: Schema.Attribute.Media<undefined, true>;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    max_capacity: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    media: Schema.Attribute.Media<'images' | 'videos', true>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
     organizer: Schema.Attribute.Relation<
       'manyToOne',
       'api::organizer.organizer'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    seat_maps: Schema.Attribute.String;
-    start_time: Schema.Attribute.DateTime;
+    seat_maps: Schema.Attribute.Media<'images' | 'files', true>;
+    start_time: Schema.Attribute.DateTime & Schema.Attribute.Required;
     tags: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -557,6 +605,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
 export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
   collectionName: 'locations';
   info: {
+    description: '';
     displayName: 'Location';
     pluralName: 'locations';
     singularName: 'location';
@@ -565,26 +614,52 @@ export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    accessibility_feature: Schema.Attribute.Relation<
-      'oneToOne',
+    accessibility_features: Schema.Attribute.Relation<
+      'oneToMany',
       'api::accessibility-feature.accessibility-feature'
     >;
-    address: Schema.Attribute.String;
-    capacity: Schema.Attribute.Integer;
-    contact_details: Schema.Attribute.String;
+    address: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+    capacity: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    contact_details: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 10;
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 10;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::location.location'
     > &
       Schema.Attribute.Private;
-    location_overview: Schema.Attribute.String;
+    location_overview: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
     media: Schema.Attribute.Media<undefined, true>;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
     opening_hours: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     size: Schema.Attribute.String;
@@ -598,6 +673,7 @@ export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
 export interface ApiOrganizerOrganizer extends Struct.CollectionTypeSchema {
   collectionName: 'organizers';
   info: {
+    description: '';
     displayName: 'Organizer';
     pluralName: 'organizers';
     singularName: 'organizer';
@@ -606,13 +682,17 @@ export interface ApiOrganizerOrganizer extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    address: Schema.Attribute.String;
-    contact_email: Schema.Attribute.Email;
+    address: Schema.Attribute.String & Schema.Attribute.Required;
+    contact_email: Schema.Attribute.Email & Schema.Attribute.Required;
     contact_phone: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 10;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -620,9 +700,15 @@ export interface ApiOrganizerOrganizer extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     media: Schema.Attribute.Media<undefined, true>;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 128;
+        minLength: 2;
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    type: Schema.Attribute.String;
+    type: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -633,6 +719,7 @@ export interface ApiOrganizerOrganizer extends Struct.CollectionTypeSchema {
 export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
   collectionName: 'tickets';
   info: {
+    description: '';
     displayName: 'Ticket';
     pluralName: 'tickets';
     singularName: 'ticket';
@@ -645,19 +732,19 @@ export interface ApiTicketTicket extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     event: Schema.Attribute.Relation<'manyToOne', 'api::event.event'>;
-    format: Schema.Attribute.String;
+    format: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::ticket.ticket'
     > &
       Schema.Attribute.Private;
-    price: Schema.Attribute.Decimal;
+    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    refund_policy: Schema.Attribute.String;
+    refund_policy: Schema.Attribute.Text;
     seat: Schema.Attribute.String;
-    status: Schema.Attribute.String;
-    ticket_type: Schema.Attribute.String;
+    ticket_status: Schema.Attribute.String & Schema.Attribute.Required;
+    ticket_type: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

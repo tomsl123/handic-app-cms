@@ -1,10 +1,26 @@
 {
+  "kind": "collectionType",
   "collectionName": "accessibility_features",
-  "info": { "singularName": "accessibility-feature", "pluralName": "accessibility-features", "displayName": "Accessibility Feature" },
-  "options": { "draftAndPublish": true },
+  "info": {
+    "singularName": "accessibility-feature",
+    "pluralName": "accessibility-features",
+    "displayName": "Accessibility Feature",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "name": { "type": "string", "required": true },
-    "description": { "type": "text" },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 128,
+      "minLength": 2
+    },
+    "description": {
+      "type": "text"
+    },
     "accessibility_need": {
       "type": "relation",
       "relation": "manyToOne",

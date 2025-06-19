@@ -1,21 +1,65 @@
 {
+  "kind": "collectionType",
   "collectionName": "locations",
-  "info": { "singularName": "location", "pluralName": "locations", "displayName": "Location" },
-  "options": { "draftAndPublish": true },
+  "info": {
+    "singularName": "location",
+    "pluralName": "locations",
+    "displayName": "Location",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "description": { "type": "text" },
-    "name": { "type": "string", "required": true },
-    "address": { "type": "string" },
-    "media": { "type": "media", "multiple": true },
-    "website": { "type": "string" },
-    "opening_hours": { "type": "string" },
-    "contact_details": { "type": "string" },
-    "location_overview": { "type": "string" },
-    "capacity": { "type": "integer" },
-    "size": { "type": "string" },
-    "accessibility_feature": {
+    "description": {
+      "type": "text",
+      "required": false,
+      "minLength": 10
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "address": {
+      "type": "string",
+      "required": true,
+      "minLength": 2
+    },
+    "media": {
+      "type": "media",
+      "multiple": true,
+      "required": false
+    },
+    "website": {
+      "type": "string",
+      "regex": "^(https?:\\/\\/)?([\\w\\-]+\\.)+[a-z]{2,6}(:\\d+)?(\\/.*)?$"
+    },
+    "opening_hours": {
+      "type": "string",
+      "required": false
+    },
+    "contact_details": {
+      "type": "text",
+      "required": true,
+      "minLength": 10
+    },
+    "location_overview": {
+      "type": "string",
+      "minLength": 2
+    },
+    "capacity": {
+      "type": "integer",
+      "min": 1
+    },
+    "size": {
+      "type": "string"
+    },
+    "accessibility_features": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::accessibility-feature.accessibility-feature"
     }
   }

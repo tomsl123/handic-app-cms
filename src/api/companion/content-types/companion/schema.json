@@ -1,10 +1,29 @@
 {
+  "kind": "collectionType",
   "collectionName": "companions",
-  "info": { "singularName": "companion", "pluralName": "companions", "displayName": "Companion" },
-  "options": { "draftAndPublish": true },
+  "info": {
+    "singularName": "companion",
+    "pluralName": "companions",
+    "displayName": "Companion",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "first_name": { "type": "string" },
-    "last_name": { "type": "string" },
+    "first_name": {
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "last_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 128,
+      "minLength": 2
+    },
     "accompanying": {
       "type": "relation",
       "relation": "manyToOne",

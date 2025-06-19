@@ -1,15 +1,41 @@
 {
+  "kind": "collectionType",
   "collectionName": "tickets",
-  "info": { "singularName": "ticket", "pluralName": "tickets", "displayName": "Ticket" },
-  "options": { "draftAndPublish": true },
+  "info": {
+    "singularName": "ticket",
+    "pluralName": "tickets",
+    "displayName": "Ticket",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "status": { "type": "string" },
-    "price": { "type": "decimal" },
-    "format": { "type": "string" },
-    "zone": { "type": "string" },
-    "seat": { "type": "string" },
-    "refund_policy": { "type": "string" },
-    "ticket_type": { "type": "string" },
+    "ticket_status": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "format": {
+      "type": "string",
+      "required": true
+    },
+    "zone": {
+      "type": "string"
+    },
+    "seat": {
+      "type": "string"
+    },
+    "refund_policy": {
+      "type": "text"
+    },
+    "ticket_type": {
+      "type": "string",
+      "required": true
+    },
     "event": {
       "type": "relation",
       "relation": "manyToOne",

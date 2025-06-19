@@ -1,19 +1,64 @@
 {
+  "kind": "collectionType",
   "collectionName": "events",
-  "info": { "singularName": "event", "pluralName": "events", "displayName": "Event" },
-  "options": { "draftAndPublish": true },
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "description": { "type": "text" },
-    "name": { "type": "string", "required": true },
-    "start_time": { "type": "datetime" },
-    "end_time": { "type": "datetime" },
-    "event_type": { "type": "string" },
-    "media": { "type": "media", "multiple": true },
-    "max_capacity": { "type": "integer" },
-    "website": { "type": "string" },
-    "tags": { "type": "string" },
-    "languages": { "type": "string" },
-    "seat_maps": { "type": "string" },
+    "description": {
+      "type": "text",
+      "required": true,
+      "minLength": 10
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "minLength": 2,
+      "maxLength": 128
+    },
+    "start_time": {
+      "type": "datetime",
+      "required": true
+    },
+    "end_time": {
+      "type": "datetime",
+      "required": true
+    },
+    "event_type": {
+      "type": "string",
+      "required": true
+    },
+    "media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "max_capacity": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "website": {
+      "type": "string",
+      "regex": "^(https?:\\/\\/)?([\\w\\-]+\\.)+[a-z]{2,6}(:\\d+)?(\\/.*)?$"
+    },
+    "tags": {
+      "type": "string"
+    },
+    "languages": {
+      "type": "string"
+    },
     "location": {
       "type": "relation",
       "relation": "manyToOne",
@@ -23,6 +68,14 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::organizer.organizer"
+    },
+    "seat_maps": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }
