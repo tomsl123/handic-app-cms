@@ -1,0 +1,22 @@
+/* src/components/HeaderSimple.module.css */
+.inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: #23486c;
+    font-weight: 500;
+    padding: 8px 12px;
+}
+
+.link[data-active] {
+    border-bottom: 2px solid #ed793b;
+}
+
+.langSelect {
+    background: white;
+}
