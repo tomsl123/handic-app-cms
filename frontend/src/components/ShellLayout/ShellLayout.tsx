@@ -18,17 +18,18 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import classes from './HeaderSimple.module.css';
 import { setAuthToken } from '@/api';
+import logo from '@/logo.jpg';
 
 const navLinks = [
     { link: '/', key: 'Home' },
     { link: '/events', key: 'Events' },
-    { link: '/about', key: 'About' },
-    { link: '/community', key: 'Community' },
 ];
 
 const languages = [
     { value: 'en', label: 'English' },
-    { value: 'de', label: 'Deutsch' },
+    { value: 'de-DE', label: 'Deutsch' },
+    { value: 'es', label: 'Español' },
+    { value: 'fr', label: 'Français' },
 ];
 
 export default function ShellLayout() {
@@ -75,9 +76,11 @@ export default function ShellLayout() {
             <AppShell.Header style={{ backgroundColor: '#d0d0d0' }}>
                 <Container size="lg" className={classes.inner}>
                     {/* Logo */}
-                    <Text fw={700} size="lg">
-                        Handic.app
-                    </Text>
+                    <img
+                        src={logo}
+                        alt="Handic.app logo"
+                        style={{ height: 36, width: 'auto', display: 'block' }}
+                    />
 
                     {/* Desktop nav links */}
                     <Group gap={20} visibleFrom="sm">

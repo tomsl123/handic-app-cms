@@ -30,7 +30,10 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5"
+    "node-fetch": "^3.3.2",
+    "p-limit": "^3.1.0",
+    "typescript": "^5",
+    "yargs": "^17.7.2"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",

@@ -11,5 +11,6 @@ export function setAuthToken(token: string | null) {
     } else {
         delete api.defaults.headers.common.Authorization;
         localStorage.removeItem('handicapp_jwt');
+        localStorage.removeItem('handicapp_user');
     }
 }

@@ -4,20 +4,14 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 
 i18n
-    // enable backend loading
     .use(HttpApi)
-
-    // detect user language
     .use(LanguageDetector)
-
-    // pass i18n instance to react-i18next
     .use(initReactI18next)
 
     .init({
         fallbackLng: 'en',
-        supportedLngs: ['en', 'de'],
+        supportedLngs: ['en', 'de-DE', 'es', 'fr'],
 
-        // namespaces let you group translations by feature
         ns: ['common', 'forms', 'ui'],
         defaultNS: 'common',
 

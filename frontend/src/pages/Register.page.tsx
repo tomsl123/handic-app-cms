@@ -18,17 +18,26 @@ import {
 import { useForm } from '@mantine/form';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '@/api';
-import {DatePickerInput} from "@mantine/dates";
+import {DatePickerInput, DatesProvider} from "@mantine/dates";
+import {useTranslation} from "react-i18next";
+import '@/i18n';
+import 'dayjs/locale/en';
+import 'dayjs/locale/de';
+import 'dayjs/locale/fr';
+import 'dayjs/locale/es';
 
 export default function RegisterPage() {
     const navigate = useNavigate();
     const [needsOptions, setNeedsOptions] = useState<{ value: string; label: string }[]>([]);
     const [loading, setLoading] = useState(false);
+    const { t, i18n } = useTranslation();
 
     // ─── fetch accessibility-need options ───────────────────────
     useEffect(() => {
         api
-            .get('/accessibility-needs') // → /api/accessibility-needs?populate=*
+            .get('/accessibility-needs', {
+                params: {locale: i18n.language},
+            })
             .then((res) => {
                 setNeedsOptions(
                     res.data.data.map((item: { name: String; id: number }) => ({label: item.name, value: item.id.toString()})),
@@ -57,19 +66,16 @@ export default function RegisterPage() {
         },
 
         validate: {
-            username: (v) => (v.trim().length < 2 ? 'Username too short' : null),
-            firstName: (v) => (!v ? 'First name required' : null),
-            lastName: (v) => (!v ? 'Last name required' : null),
-            email: (v) => (/^\S+@\S+$/.test(v) ? null : 'Invalid email'),
-            password: (v) => (v.length < 6 ? 'Min 6 chars' : null),
-            birthDate: (v) => (v instanceof Date ? null : 'Choose a date'),
-            issueDate: (v) => (v instanceof Date ? null : 'Choose a date'),
-            expiryDate: (v) => (v instanceof Date ? null : 'Choose a date'),
-            primaryLanguage: (v) => (!v ? 'Select language' : null),
-            disabilityCardNumber: (v) => (!v ? 'Required' : null),
-            disabilityCardFile: (v) => (!v ? 'Upload required' : null),
+            username: (v) => (v.trim().length < 2 ? t("UsernameTooShort") : null),
+            firstName: (v) => (!v ? t("Required") : null),
+            lastName: (v) => (!v ? t("Required") : null),
+            email: (v) => (/^\S+@\S+$/.test(v) ? null : t("InvalidEmail")),
+            password: (v) => (v.length < 6 ? t("PasswordTooShort") : null),
+            primaryLanguage: (v) => (!v ? t("Required") : null),
+            disabilityCardNumber: (v) => (!v ? t("Required") : null),
+            disabilityCardFile: (v) => (!v ? t("Required") : null),
             accessibilityNeeds: (v: string[]) =>
-                v.length === 0 ? 'Select at least one need' : null,
+                v.length === 0 ? t("Required") : null,
         },
     });
 
@@ -118,86 +124,90 @@ export default function RegisterPage() {
     // ─── UI ─────────────────────────────────────────────────────
     return (
         <Container size={640} my="xl">
-            <LoadingOverlay visible={loading} overlayOpacity={0.25} />
-            <Title align="center">Create account</Title>
+            <LoadingOverlay visible={loading} />
+            <Title ta="center">{t("CreateAccountTitle")}</Title>
 
             <Paper withBorder shadow="md" p={32} mt={24} radius="md">
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <Stack gap="md">
                         <Group grow>
-                            <TextInput label="First name" {...form.getInputProps('firstName')} required />
-                            <TextInput label="Last name" {...form.getInputProps('lastName')} required />
+                            <TextInput label={t("FirstName")} {...form.getInputProps('firstName')} required />
+                            <TextInput label={t("LastName")} {...form.getInputProps('lastName')} required />
                         </Group>
 
-                        <DatePickerInput
-                            label="Birth date"
-                            {...form.getInputProps('birthDate')}
-                            maxDate={new Date()}
-                            required
-                        />
+                        <DatesProvider settings={{locale: i18n.language }}>
+                            <DatePickerInput
+                                label={t("BirthDate")}
+                                {...form.getInputProps('birthDate')}
+                                maxDate={new Date()}
+                                required
+                            />
+                        </DatesProvider>
 
                         <Select
-                            label="Primary language"
-                            placeholder="Select"
+                            label={t("PrimaryLanguage")}
+                            placeholder={t("Select")}
                             data={[
-                                { value: "english", label: "English" },
-                                { value: "german", label: "German" },
-                                { value: "french", label: "French" },
-                                { value: "spanish", label: "Spanish" },
+                                { value: "english", label: t("English") },
+                                { value: "german", label: t("German") },
+                                { value: "french", label: t("French") },
+                                { value: "spanish", label: t("Spanish ") },
                             ]}
                             {...form.getInputProps('primaryLanguage')}
                             required
                         />
 
-                        <TextInput label="Email" {...form.getInputProps('email')} required />
-                        <TextInput label="Username" {...form.getInputProps('username')} required />
-                        <PasswordInput label="Password" {...form.getInputProps('password')} required />
+                        <TextInput label={t("Email")} {...form.getInputProps('email')} required />
+                        <TextInput label={t("Username")} {...form.getInputProps('username')} required />
+                        <PasswordInput label={t("Password")} {...form.getInputProps('password')} required />
 
                         <Group grow>
                             <TextInput
-                                label="Disability-card number"
+                                label={t("DisabilityCardNumber")}
                                 {...form.getInputProps('disabilityCardNumber')}
                                 required
                             />
                             <FileInput
-                                label="Disability-card file"
+                                label={t("DisabilityCardFile")}
                                 accept="image/*,application/pdf"
-                                placeholder="Upload proof"
+                                placeholder={t("UploadProof")}
                                 {...form.getInputProps('disabilityCardFile')}
                                 required
                             />
                         </Group>
                         <Group grow>
-                            <DatePickerInput
-                                label="Disability Card Date of Issue"
-                                {...form.getInputProps('issueDate')}
-                                maxDate={new Date()}
-                                required
-                            />
-                            <DatePickerInput
-                                label="Disability Card Date of Expiry"
-                                {...form.getInputProps('expiryDate')}
-                                minDate={new Date()}
-                                required
-                            />
+                            <DatesProvider settings={{locale: i18n.language }}>
+                                <DatePickerInput
+                                    label={t("IssueDate")}
+                                    {...form.getInputProps('issueDate')}
+                                    maxDate={new Date()}
+                                    required
+                                />
+                                <DatePickerInput
+                                    label={t("ExpiryDate")}
+                                    {...form.getInputProps('expiryDate')}
+                                    minDate={new Date()}
+                                    required
+                                />
+                            </DatesProvider>
                         </Group>
 
                         <MultiSelect
                             data={needsOptions}
-                            label="Accessibility needs"
-                            placeholder="Select needs"
+                            label={t("AccessibilityNeeds")}
+                            placeholder={t("SelectNeeds")}
                             {...form.getInputProps('accessibilityNeeds')}
                             required
                         />
 
                         <Button type="submit" fullWidth mt="md">
-                            Register
+                            {t("Register")}
                         </Button>
                     </Stack>
                 </form>
 
-                <Text size="sm" mt="md" align="center">
-                    Have an account? <Link to="/login">Log in</Link>
+                <Text size="sm" mt="md" ta="center">
+                    {t("HaveAnAccount")} <Link to="/login">{t("Login")}</Link>
                 </Text>
             </Paper>
         </Container>

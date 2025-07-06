@@ -1,22 +1,24 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ShellLayout from '@/components/ShellLayout/ShellLayout';
-import { HomePage } from '@/pages/Home.page';
+import HomePage from '@/pages/Home.page';
 import LoginPage from '@/pages/Login.page';
 import RegisterPage from '@/pages/Register.page';
+import EventsPage from "@/pages/Events.page";
+import EventDetailPage from "@/pages/Event.page";
 
 const router = createBrowserRouter([
-  // --- layout route (wraps everything that should show nav + header) ---
+
   {
-    element: <ShellLayout />,           // no path -> acts as pure layout
+    element: <ShellLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      // add more protected pages here
+      { path: '/login', element: <LoginPage /> },
+      { path: '/register', element: <RegisterPage /> },
+      { path: '/events', element: <EventsPage /> },
+      { path: '/events/:id', element: <EventDetailPage /> },
     ],
   },
 
-  // --- routes that bypass the layout ---
-  { path: '/login', element: <LoginPage /> },
-  { path: '/register', element: <RegisterPage /> },
 ]);
 
 export function Router() {

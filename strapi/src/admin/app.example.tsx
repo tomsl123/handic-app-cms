@@ -6,7 +6,7 @@ export default {
       // 'ar',
       // 'fr',
       // 'cs',
-      // 'de',
+      // 'de-DE',
       // 'dk',
       // 'es',
       // 'he',

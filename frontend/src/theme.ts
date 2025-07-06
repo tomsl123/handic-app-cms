@@ -26,5 +26,8 @@ export const theme = createTheme({
     Button: {
       defaultProps: { radius: 'md' },
     },
+    Text: {
+      defaultProps: { color: '#28547e' },
+    },
   },
 });
